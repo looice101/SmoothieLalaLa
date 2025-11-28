@@ -1,0 +1,833 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Comic Neue', cursive;
+  background: linear-gradient(135deg, #ffb6c1 0%, #87ceeb 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+  border: 3px solid #ff99cc;
+}
+
+.screen {
+  display: none;
+  padding: 30px;
+  min-height: 600px;
+}
+
+.screen.active {
+  display: block;
+}
+
+/* Cute Headers */
+.welcome-card h1,
+.game-header h2,
+.recipe-card h3,
+.ingredients-panel h3,
+.shop-container h2,
+.result-card h2 {
+  font-family: 'Patrick Hand', cursive;
+  color: #ff6b6b;
+}
+
+/* Welcome Screens */
+.welcome-card {
+  text-align: center;
+  padding: 50px 30px;
+}
+
+.welcome-card h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.welcome-card h2 {
+  color: #4ecdc4;
+  font-size: 2em;
+  margin-bottom: 25px;
+}
+
+.welcome-card p {
+  font-size: 1.2em;
+  color: #666;
+  margin-bottom: 25px;
+}
+
+.character {
+  font-size: 6em;
+  margin: 25px 0;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+input {
+  padding: 12px 20px;
+  font-size: 1em;
+  border: 3px solid #4ecdc4;
+  border-radius: 25px;
+  margin: 15px 0;
+  width: 280px;
+  text-align: center;
+  outline: none;
+  background: rgba(255, 255, 255, 0.9);
+  font-family: inherit;
+}
+
+button {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 1.1em;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+  font-family: inherit;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+}
+
+.shop-button {
+  background: #4ecdc4;
+  padding: 10px 20px;
+  font-size: 1em;
+}
+
+/* Customer Orders Grid */
+.orders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.order-card {
+  background: white;
+  border-radius: 20px;
+  padding: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 3px solid transparent;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.order-card:hover {
+  transform: translateY(-5px);
+  border-color: #4ecdc4;
+  box-shadow: 0 10px 25px rgba(78, 205, 196, 0.3);
+}
+
+.order-card h3 {
+  color: #ff6b6b;
+  margin-bottom: 15px;
+  font-size: 1.4em;
+}
+
+.order-recipe {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 15px 0;
+  text-align: left;
+}
+
+.order-recipe h4 {
+  color: #333;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.recipe-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.recipe-item:last-child {
+  border-bottom: none;
+}
+
+.order-reward {
+  font-size: 1.2em;
+  color: #27ae60;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.order-timer-info {
+  color: #666;
+  font-size: 0.9em;
+  margin: 10px 0;
+}
+
+.accept-order-btn {
+  background: #4ecdc4;
+  margin-top: 10px;
+}
+
+/* Selection Screen Stats */
+.selection-stats {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+/* Game Screen */
+.game-stats {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 15px 20px;
+  border-radius: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #333;
+}
+
+.stat-icon {
+  font-size: 1.3em;
+}
+
+/* Customer Order Position */
+.customer-order {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  z-index: 10;
+}
+
+.customer-avatar {
+  font-size: 2.5em;
+}
+
+.order-bubble {
+  background: white;
+  padding: 15px 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+  max-width: 280px;
+}
+
+.order-bubble p {
+  margin-bottom: 8px;
+  font-size: 1em;
+  color: #333;
+}
+
+.timer-bar {
+  width: 100%;
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.timer-fill {
+  height: 100%;
+  background: #4ecdc4;
+  width: 100%;
+  transition: width 1s linear;
+}
+
+/* Game Area Layout - Fixed */
+.game-area {
+  display: grid;
+  grid-template-columns: 320px 1fr 350px;
+  gap: 25px;
+  margin-top: 80px;
+  align-items: start;
+}
+
+/* Recipe Card - Top Left */
+.recipe-card {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.recipe-card h3 {
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 1.3em;
+}
+
+.recipe-list {
+  font-size: 1em;
+  line-height: 1.6;
+  color: #666;
+}
+
+/* Enhanced Recipe Items with Progress */
+.recipe-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  margin: 6px 0;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  background: #f8f9fa;
+  border: 2px solid transparent;
+}
+
+.recipe-item.ingredient-complete {
+  background: #d4edda;
+  border-color: #28a745;
+  transform: scale(1.02);
+}
+
+.ingredient-emoji {
+  font-size: 1.4em;
+  width: 30px;
+  text-align: center;
+}
+
+.ingredient-name {
+  flex: 1;
+  font-weight: bold;
+  color: #333;
+  font-size: 1em;
+}
+
+.ingredient-count {
+  color: #666;
+  font-size: 0.9em;
+  min-width: 80px;
+  text-align: right;
+}
+
+.count-display {
+  background: rgba(0,0,0,0.1);
+  padding: 4px 8px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 0.9em;
+  transition: all 0.3s ease;
+}
+
+.recipe-item.ingredient-complete .count-display {
+  background: #28a745;
+  color: white;
+}
+
+/* Progress Animation */
+@keyframes progressComplete {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.recipe-item.ingredient-complete {
+  animation: progressComplete 0.5s ease;
+}
+
+/* Inventory Display - Below Recipe */
+.inventory-display {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  max-width: 280px;
+  grid-column: 1;
+  grid-row: 2;
+  margin-top: 20px;
+}
+
+.inventory-display h4 {
+  color: #ff6b6b;
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 1.1em;
+}
+
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.inventory-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.inventory-emoji {
+  font-size: 1.2em;
+}
+
+.inventory-count {
+  font-size: 0.8em;
+  font-weight: bold;
+  color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.1);
+  padding: 2px 6px;
+  border-radius: 8px;
+  min-width: 20px;
+}
+
+/* Ingredients Panel */
+.ingredients-panel {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+.ingredients-panel h3 {
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 1.3em;
+}
+
+.ingredients-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.ingredient {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  cursor: grab;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.ingredient:hover {
+  background: #e9ecef;
+  border-color: #4ecdc4;
+  transform: translateY(-2px);
+}
+
+.ingredient.dragging {
+  opacity: 0.6;
+}
+
+.ingredient-icon {
+  font-size: 1.8em;
+}
+
+.ingredient span {
+  font-size: 1em;
+  color: #333;
+}
+
+/* Blender Area */
+.blender-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+  grid-column: 3;
+  grid-row: 1 / span 2;
+}
+
+.blender-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.blender {
+  position: relative;
+  width: 200px;
+  height: 250px;
+}
+
+.blender-content {
+  position: absolute;
+  bottom: 50px;
+  left: 25px;
+  width: 150px;
+  height: 150px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 75px 75px 0 0;
+  overflow: hidden;
+  border: 3px solid #bdc3c7;
+}
+
+.blender-liquid {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background: linear-gradient(to top, transparent 30%, rgba(255,255,255,0.3) 100%);
+  border-radius: 75px 75px 0 0;
+  transition: height 0.5s ease, background 0.5s ease;
+}
+
+.ingredients-in-blender {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-end;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px;
+  pointer-events: none;
+}
+
+.blender-base {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200px;
+  height: 50px;
+  background: #95a5a6;
+  border-radius: 100px 100px 20px 20px;
+}
+
+.blender-lid {
+  position: absolute;
+  top: 0;
+  left: 25px;
+  width: 150px;
+  height: 30px;
+  background: #7f8c8d;
+  border-radius: 75px 75px 0 0;
+  z-index: 2;
+}
+
+.blender.drop-zone {
+  border: 3px dashed #4ecdc4;
+  background: rgba(78, 205, 196, 0.1);
+}
+
+.blend-btn {
+  font-size: 1.3em;
+  padding: 15px 30px;
+}
+
+.cup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.cup {
+  position: relative;
+  width: 120px;
+  height: 180px;
+}
+
+.cup-fill {
+  position: absolute;
+  bottom: 20px;
+  left: 15px;
+  width: 90px;
+  height: 0%;
+  background: linear-gradient(to top, transparent, rgba(255, 255, 255, 0.3));
+  border-radius: 0 0 45px 45px;
+  transition: height 2s ease-in-out;
+  z-index: 1;
+}
+
+.cup-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 60px 60px 0 0;
+  z-index: 2;
+  border: 2px solid #bdc3c7;
+}
+
+.cup-straw {
+  position: absolute;
+  top: -25px;
+  right: 25px;
+  font-size: 1.8em;
+  z-index: 3;
+  transform: rotate(15deg);
+}
+
+.cup-label {
+  font-size: 1em;
+  color: #666;
+  font-weight: bold;
+}
+
+/* Result Screen */
+.result-card {
+  text-align: center;
+  padding: 50px 30px;
+}
+
+.result-card h2 {
+  font-size: 2.5em;
+  margin-bottom: 25px;
+}
+
+.earnings {
+  font-size: 1.8em;
+  color: #27ae60;
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+
+.result-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.action-btn {
+  background: #4ecdc4;
+}
+
+/* Shop Screen */
+.shop-container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.shop-container h2 {
+  font-size: 2.2em;
+  margin-bottom: 25px;
+}
+
+.shop-stats {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.shop-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.shop-item {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  text-align: left;
+  position: relative;
+}
+
+.shop-item:hover {
+  transform: translateY(-3px);
+  border-color: #4ecdc4;
+}
+
+/* Shop Items with Inventory Count */
+.shop-inventory-count {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #4ecdc4;
+  color: white;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8em;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.item-icon {
+  font-size: 2.2em;
+}
+
+.item-info h4 {
+  color: #333;
+  margin-bottom: 5px;
+  font-size: 1.1em;
+}
+
+.item-info p {
+  color: #666;
+  margin-bottom: 8px;
+  font-size: 0.9em;
+}
+
+.item-price {
+  color: #ff6b6b;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.back-btn {
+  background: #95a5a6;
+}
+
+/* Result Message */
+.result-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  font-size: 1.1em;
+  color: #333;
+  z-index: 1000;
+  max-width: 350px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Fruit in blender */
+.fruit-in-blender {
+  font-size: 1.2em;
+  animation: float 2s infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-3px) rotate(5deg); }
+}
+
+/* Blending animation */
+.blending {
+  animation: blend 0.3s infinite;
+}
+
+@keyframes blend {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  75% { transform: rotate(-5deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .game-area {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto auto;
+      gap: 20px;
+      margin-top: 180px;
+  }
+  
+  .recipe-card {
+      grid-column: 1;
+      grid-row: 1;
+  }
+  
+  .inventory-display {
+      grid-column: 1;
+      grid-row: 2;
+      max-width: 100%;
+      margin-top: 0;
+  }
+  
+  .ingredients-panel {
+      grid-column: 1;
+      grid-row: 3;
+  }
+  
+  .blender-area {
+      grid-column: 1;
+      grid-row: 4;
+  }
+}
+
+@media (max-width: 768px) {
+  .screen {
+      padding: 20px;
+  }
+  
+  .welcome-card h1 {
+      font-size: 2em;
+  }
+  
+  .orders-grid {
+      grid-template-columns: 1fr;
+  }
+  
+  .ingredients-grid {
+      grid-template-columns: 1fr;
+  }
+  
+  .result-actions {
+      flex-direction: column;
+      align-items: center;
+  }
+}

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🥤 Smoothie LaLaLand 🍓</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Patrick+Hand&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Screen 1: Name Input -->
+        <section id="nameScreen" class="screen active">
+            <div class="welcome-card">
+                <h1>Welcome to Smoothie LaLaLand! 🍓🥭</h1>
+                <p>Create delicious smoothies and build your smoothie empire!</p>
+                <input type="text" id="playerName" placeholder="Enter your name">
+                <button id="startBtn">Start Your Smoothie Journey!</button>
+            </div>
+        </section>
+
+        <!-- Screen 2: Welcome -->
+        <section id="welcomeScreen" class="screen">
+            <div class="welcome-card">
+                <h2 id="welcomeMsg"></h2>
+                <div class="character">👩‍🍳</div>
+                <button id="continueBtn">Let's Make Smoothies!</button>
+            </div>
+        </section>
+
+        <!-- Screen 3: Customer Orders -->
+        <section id="selectionScreen" class="screen">
+            <div class="game-header">
+                <h2>Customer Orders 📝</h2>
+                <p>Choose an order to fulfill!</p>
+            </div>
+            
+            <div class="orders-grid" id="ordersGrid">
+                <!-- Customer orders will be generated here -->
+            </div>
+            
+            <div class="selection-stats">
+                <div class="stat">
+                    <span class="stat-icon">💰</span>
+                    <span id="selectionMoney">100</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-icon">⭐</span>
+                    <span id="selectionReputation">0</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Screen 4: Game Screen -->
+        <section id="gameScreen" class="screen">
+            <!-- Game Stats -->
+            <div class="game-stats">
+                <div class="stat">
+                    <span class="stat-icon">💰</span>
+                    <span id="money">100</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-icon">⭐</span>
+                    <span id="reputation">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-icon">🏆</span>
+                    <span id="levelDisplay">1</span>
+                </div>
+                <button id="shopBtn" class="shop-button">🛍️ Shop</button>
+            </div>
+
+            <!-- Customer Order -->
+            <div class="customer-order">
+                <div class="customer-avatar" id="currentCustomerAvatar">👩</div>
+                <div class="order-bubble">
+                    <p id="orderDetails">I'd like a smoothie!</p>
+                    <div class="order-timer">
+                        <div class="timer-bar">
+                            <div id="orderTimer" class="timer-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-area">
+                <!-- Recipe -->
+                <div class="recipe-card">
+                    <h3 id="recipeTitle">Recipe</h3>
+                    <div id="recipeList" class="recipe-list"></div>
+                </div>
+
+                <!-- Inventory Display -->
+                <div class="inventory-display">
+                    <h4>My Ingredients</h4>
+                    <div class="inventory-grid" id="inventoryGrid">
+                        <!-- Inventory will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Ingredients -->
+                <div class="ingredients-panel">
+                    <h3>Drag Ingredients to Blender</h3>
+                    <div class="ingredients-grid" id="ingredientsGrid">
+                        <div class="ingredient" draggable="true" data-name="Strawberry">
+                            <div class="ingredient-icon">🍓</div>
+                            <span>Strawberry</span>
+                        </div>
+                        <div class="ingredient" draggable="true" data-name="Banana">
+                            <div class="ingredient-icon">🍌</div>
+                            <span>Banana</span>
+                        </div>
+                        <div class="ingredient" draggable="true" data-name="Mango">
+                            <div class="ingredient-icon">🥭</div>
+                            <span>Mango</span>
+                        </div>
+                        <div class="ingredient" draggable="true" data-name="Blueberries">
+                            <div class="ingredient-icon">🫐</div>
+                            <span>Blueberries</span>
+                        </div>
+                        <div class="ingredient" draggable="true" data-name="Pineapple">
+                            <div class="ingredient-icon">🍍</div>
+                            <span>Pineapple</span>
+                        </div>
+                        <div class="ingredient" draggable="true" data-name="Watermelon">
+                            <div class="ingredient-icon">🍉</div>
+                            <span>Watermelon</span>
+                        </div>
+                        <div class="ingredient" draggable="true" data-name="Milk">
+                            <div class="ingredient-icon">🥛</div>
+                            <span>Milk</span>
+                        </div>
+                        <div class="ingredient" draggable="true" data-name="Ice">
+                            <div class="ingredient-icon">🧊</div>
+                            <span>Ice</span>
+                        </div>
+                        <div class="ingredient" draggable="true" data-name="Spinach">
+                            <div class="ingredient-icon">🥬</div>
+                            <span>Spinach</span>
+                        </div>
+                        <div class="ingredient" draggable="true" data-name="Yogurt">
+                            <div class="ingredient-icon">🍶</div>
+                            <span>Yogurt</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blender Area -->
+                <div class="blender-area">
+                    <div class="blender-container">
+                        <div class="blender" id="blender">
+                            <div id="blenderContent" class="blender-content">
+                                <div class="blender-liquid" id="blenderLiquid"></div>
+                                <div id="ingredientsInBlender" class="ingredients-in-blender"></div>
+                            </div>
+                            <div class="blender-base"></div>
+                            <div class="blender-lid"></div>
+                        </div>
+                        <button id="blendBtn" class="blend-btn">BLEND! 🌀</button>
+                    </div>
+
+                    <!-- Cup -->
+                    <div class="cup-container">
+                        <div class="cup">
+                            <div id="cupFill" class="cup-fill"></div>
+                            <div class="cup-top"></div>
+                            <div class="cup-straw">🥤</div>
+                        </div>
+                        <div class="cup-label">Your Smoothie</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="resultMsg" class="result-message hidden"></div>
+        </section>
+
+        <!-- Screen 5: Result Screen -->
+        <section id="resultScreen" class="screen">
+            <div class="result-card">
+                <h2 id="levelResult">Order Complete!</h2>
+                <div id="earningsDisplay" class="earnings"></div>
+                <div class="result-actions">
+                    <button id="nextSmoothieBtn" class="action-btn">Next Order</button>
+                    <button id="shopBtnResult" class="action-btn">Buy Ingredients</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Screen 6: Shop -->
+        <section id="shopScreen" class="screen">
+            <div class="shop-container">
+                <h2>🛍️ Smoothie Shop</h2>
+                <div class="shop-stats">
+                    <div class="stat">
+                        <span class="stat-icon">💰</span>
+                        <span id="shopMoney">100</span>
+                    </div>
+                </div>
+
+                <div class="shop-items">
+                    <div class="shop-item" data-name="Strawberry" data-cost="2">
+                        <div class="item-icon">🍓</div>
+                        <div class="item-info">
+                            <h4>Strawberry</h4>
+                            <p>Fresh & sweet</p>
+                            <div class="item-price">$2</div>
+                        </div>
+                    </div>
+                    <div class="shop-item" data-name="Banana" data-cost="1">
+                        <div class="item-icon">🍌</div>
+                        <div class="item-info">
+                            <h4>Banana</h4>
+                            <p>Creamy texture</p>
+                            <div class="item-price">$1</div>
+                        </div>
+                    </div>
+                    <div class="shop-item" data-name="Mango" data-cost="3">
+                        <div class="item-icon">🥭</div>
+                        <div class="item-info">
+                            <h4>Mango</h4>
+                            <p>Tropical flavor</p>
+                            <div class="item-price">$3</div>
+                        </div>
+                    </div>
+                    <div class="shop-item" data-name="Blueberries" data-cost="4">
+                        <div class="item-icon">🫐</div>
+                        <div class="item-info">
+                            <h4>Blueberries</h4>
+                            <p>Antioxidant rich</p>
+                            <div class="item-price">$4</div>
+                        </div>
+                    </div>
+                    <div class="shop-item" data-name="Pineapple" data-cost="3">
+                        <div class="item-icon">🍍</div>
+                        <div class="item-info">
+                            <h4>Pineapple</h4>
+                            <p>Sweet & tangy</p>
+                            <div class="item-price">$3</div>
+                        </div>
+                    </div>
+                    <div class="shop-item" data-name="Watermelon" data-cost="2">
+                        <div class="item-icon">🍉</div>
+                        <div class="item-info">
+                            <h4>Watermelon</h4>
+                            <p>Refreshing</p>
+                            <div class="item-price">$2</div>
+                        </div>
+                    </div>
+                    <div class="shop-item" data-name="Milk" data-cost="1">
+                        <div class="item-icon">🥛</div>
+                        <div class="item-info">
+                            <h4>Milk</h4>
+                            <p>Creamy base</p>
+                            <div class="item-price">$1</div>
+                        </div>
+                    </div>
+                    <div class="shop-item" data-name="Ice" data-cost="0">
+                        <div class="item-icon">🧊</div>
+                        <div class="item-info">
+                            <h4>Ice</h4>
+                            <p>Chilled perfection</p>
+                            <div class="item-price">FREE</div>
+                        </div>
+                    </div>
+                    <div class="shop-item" data-name="Spinach" data-cost="2">
+                        <div class="item-icon">🥬</div>
+                        <div class="item-info">
+                            <h4>Spinach</h4>
+                            <p>Healthy greens</p>
+                            <div class="item-price">$2</div>
+                        </div>
+                    </div>
+                    <div class="shop-item" data-name="Yogurt" data-cost="2">
+                        <div class="item-icon">🍶</div>
+                        <div class="item-info">
+                            <h4>Yogurt</h4>
+                            <p>Creamy protein</p>
+                            <div class="item-price">$2</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="backToGameBtn" class="back-btn">Back to Game</button>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
